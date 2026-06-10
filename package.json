@@ -1,0 +1,36 @@
+{
+  "name": "money-tracker",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "prisma generate && nuxt prepare",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "db:reset": "prisma migrate reset"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "better-sqlite3": "^12.10.0",
+    "chart.js": "^4.5.1",
+    "dotenv": "^17.4.2",
+    "nuxt": "^4.4.7",
+    "vue": "^3.5.35",
+    "vue-chartjs": "^5.3.3",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "prisma": "^7.8.0",
+    "tsx": "^4.22.4"
+  }
+}

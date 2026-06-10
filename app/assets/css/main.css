@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html.dark {
+    color-scheme: dark;
+  }
+
+  .dark input,
+  .dark select,
+  .dark textarea {
+    color-scheme: dark;
+  }
+
+  .dark ::placeholder {
+    @apply text-slate-500;
+  }
+}
+
+@layer components {
+  .text-label {
+    @apply text-sm font-medium text-slate-700 dark:text-slate-300;
+  }
+
+  .text-label-sm {
+    @apply text-xs font-medium text-slate-600 dark:text-slate-400;
+  }
+
+  .text-muted {
+    @apply text-sm text-slate-500 dark:text-slate-400;
+  }
+
+  .text-muted-xs {
+    @apply text-xs text-slate-500 dark:text-slate-400;
+  }
+
+  .text-heading {
+    @apply text-slate-900 dark:text-slate-100;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .alert-error {
+    @apply rounded-xl border border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/50 dark:bg-rose-950/40 dark:text-rose-300;
+  }
+
+  .text-income {
+    @apply text-emerald-700 dark:text-emerald-300;
+  }
+
+  .text-outcome {
+    @apply text-rose-700 dark:text-rose-300;
+  }
+
+  .badge-income {
+    @apply bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300;
+  }
+
+  .badge-outcome {
+    @apply bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300;
+  }
+
+  .skeleton-bar {
+    @apply bg-slate-200 dark:bg-slate-700;
+  }
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+.touch-target {
+  @apply min-h-11;
+}
+
+/* Prevent iOS Safari auto-zoom on form focus (shows zoom UI at bottom). */
+@media screen and (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
