@@ -35,7 +35,7 @@ const detailPath = computed(() => `/reports/monthly/${props.item.year}/${props.i
           class="font-medium"
           :class="item.summary.balance >= 0 ? 'text-income' : 'text-outcome'"
         >
-          Sisa:
+          Balance:
         </span>
         {{ formatRupiah(item.summary.balance) }}
       </p>

@@ -12,6 +12,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[GET /api/auth/me]', error)
-    return apiError(event, 'Gagal mengambil profil.', 500)
+    return apiError(event, 'Failed to fetch profile.', 500)
   }
 })

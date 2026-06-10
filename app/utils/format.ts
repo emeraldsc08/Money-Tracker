@@ -35,12 +35,12 @@ export function formatAmountInput(value: string): string {
 export function formatDayLabel(dateStr: string): string {
   const today = getTodayJakartaDateString()
   if (dateStr === today) {
-    return 'Hari ini'
+    return 'Today'
   }
 
   const yesterday = addDaysToDateString(today, -1)
   if (dateStr === yesterday) {
-    return 'Kemarin'
+    return 'Yesterday'
   }
 
   const [year, month, day] = dateStr.split('-').map(Number)
@@ -49,7 +49,7 @@ export function formatDayLabel(dateStr: string): string {
   }
 
   const date = new Date(Date.UTC(year, month - 1, day, 12))
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat('en-US', {
     timeZone: JAKARTA_TIMEZONE,
     weekday: 'long',
     day: 'numeric',
@@ -60,7 +60,7 @@ export function formatDayLabel(dateStr: string): string {
 
 export function formatTransactionTime(isoDate: string): string {
   const date = new Date(isoDate)
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat('en-US', {
     timeZone: JAKARTA_TIMEZONE,
     hour: '2-digit',
     minute: '2-digit',
@@ -69,7 +69,7 @@ export function formatTransactionTime(isoDate: string): string {
 
 export function formatTransactionDate(isoDate: string): string {
   const date = new Date(isoDate)
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat('en-US', {
     timeZone: JAKARTA_TIMEZONE,
     day: 'numeric',
     month: 'short',

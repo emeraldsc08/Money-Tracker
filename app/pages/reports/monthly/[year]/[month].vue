@@ -65,7 +65,7 @@ function exportCsv() {
         to="/reports/monthly"
         class="touch-target mt-4 inline-flex items-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white dark:bg-slate-100 dark:text-slate-900"
       >
-        Kembali ke Monthly Report
+        Back to Monthly Report
       </NuxtLink>
     </div>
 
@@ -81,8 +81,8 @@ function exportCsv() {
 
         <ReportEmptyState
           v-if="!hasTransactions"
-          title="Belum ada data di bulan ini"
-          description="Tidak ada transaksi tercatat untuk periode ini. Coba pilih bulan lain atau tambahkan transaksi baru."
+          title="No data for this month"
+          description="No transactions were recorded for this period. Try another month or add a new transaction."
         />
 
         <template v-else>

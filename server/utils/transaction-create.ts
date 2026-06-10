@@ -12,12 +12,12 @@ export async function resolveTransactionMasterIds(
 ): Promise<ResolveResult> {
   const sourceId = await resolveSourceIdForUser(userId, input.source)
   if (!sourceId) {
-    return { ok: false, error: 'Sumber dana tidak ditemukan.' }
+    return { ok: false, error: 'Source not found.' }
   }
 
   const categoryId = await resolveCategoryIdForUser(userId, input.type as TransactionType, input.category)
   if (!categoryId) {
-    return { ok: false, error: 'Kategori tidak ditemukan.' }
+    return { ok: false, error: 'Category not found.' }
   }
 
   return { ok: true, sourceId, categoryId }

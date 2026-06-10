@@ -9,7 +9,7 @@ export function useTransactionCategories(type: TransactionCategoryType) {
     query: { type },
     transform: (response: ApiResponse<SerializedCategory[]>) => {
       if (!response.success) {
-        throw new Error(response.error ?? 'Gagal mengambil kategori.')
+        throw new Error(response.error ?? 'Failed to fetch categories.')
       }
       return response.data ?? []
     },

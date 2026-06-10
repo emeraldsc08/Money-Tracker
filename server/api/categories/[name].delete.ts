@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const type = query.type
 
     if (!name) {
-      return apiError(event, 'Nama kategori wajib diisi.', 400)
+      return apiError(event, 'Category name is required.', 400)
     }
 
     if (type !== TransactionType.INCOME && type !== TransactionType.OUTCOME) {
@@ -28,11 +28,11 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!category) {
-      return apiError(event, 'Kategori tidak ditemukan.', 404)
+      return apiError(event, 'Category not found.', 404)
     }
 
     if (category.isSystem) {
-      return apiError(event, 'Kategori bawaan tidak bisa dihapus.', 400)
+      return apiError(event, 'Default categories cannot be deleted.', 400)
     }
 
     const usageCount = await prisma.transaction.count({
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (usageCount > 0) {
-      return apiError(event, 'Kategori masih dipakai transaksi.', 400)
+      return apiError(event, 'Category is still used by transactions.', 400)
     }
 
     await prisma.category.delete({
@@ -55,6 +55,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[DELETE /api/categories/:name]', error)
-    return apiError(event, 'Gagal menghapus kategori.', 500)
+    return apiError(event, 'Failed to delete category.', 500)
   }
 })

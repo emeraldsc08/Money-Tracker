@@ -19,9 +19,9 @@ const emit = defineEmits<{
 }>()
 
 const typeOptions: Array<{ id: TransactionTypeFilter, label: string }> = [
-  { id: 'all', label: 'Semua' },
-  { id: 'INCOME', label: 'Masuk' },
-  { id: 'OUTCOME', label: 'Keluar' },
+  { id: 'all', label: 'All' },
+  { id: 'INCOME', label: 'Income' },
+  { id: 'OUTCOME', label: 'Outcome' },
 ]
 
 const dayLabel = computed(() => formatDayLabel(props.filters.date))
@@ -63,7 +63,7 @@ function goToToday() {
     <div class="flex items-center justify-between gap-3">
       <div>
         <p class="text-sm font-medium text-slate-700 dark:text-slate-300">
-          Filter Harian
+          Daily Filter
         </p>
         <p class="text-muted-xs mt-0.5">
           {{ dayLabel }}
@@ -79,12 +79,12 @@ function goToToday() {
     </div>
 
     <div class="space-y-2">
-      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Tanggal</span>
+      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Date</span>
       <div class="flex items-center gap-2">
         <button
           type="button"
           class="touch-target inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
-          aria-label="Hari sebelumnya"
+          aria-label="Previous day"
           @click="goToPreviousDay"
         >
           <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -102,7 +102,7 @@ function goToToday() {
         <button
           type="button"
           class="touch-target inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
-          aria-label="Hari berikutnya"
+          aria-label="Next day"
           :disabled="!canGoNext || !nextDate"
           @click="goToNextDay"
         >
@@ -118,12 +118,12 @@ function goToToday() {
         class="touch-target w-full rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
         @click="goToToday"
       >
-        Kembali ke hari ini
+        Back to today
       </button>
     </div>
 
     <div class="space-y-1.5">
-      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Tipe</span>
+      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Type</span>
       <div class="grid grid-cols-3 gap-2">
         <button
           v-for="option in typeOptions"
@@ -141,14 +141,14 @@ function goToToday() {
     </div>
 
     <label class="block space-y-1.5">
-      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Sumber</span>
+      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Source</span>
       <select
         :value="filters.source"
         class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-slate-700"
         @change="updateSource(($event.target as HTMLSelectElement).value)"
       >
         <option value="all">
-          Semua sumber
+          All sources
         </option>
         <option
           v-for="source in DEFAULT_SOURCES"

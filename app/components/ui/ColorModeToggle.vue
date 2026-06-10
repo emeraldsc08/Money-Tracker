@@ -26,7 +26,7 @@ const buttonClass = computed(() => {
   <button
     type="button"
     :class="buttonClass"
-    :aria-label="isDark ? 'Ubah ke mode terang' : 'Ubah ke mode gelap'"
+    :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
     @click="toggleColorMode"
   >
     <svg
@@ -60,7 +60,7 @@ const buttonClass = computed(() => {
       />
     </svg>
     <span v-if="variant !== 'icon'">
-      {{ isDark ? 'Mode Terang' : 'Mode Gelap' }}
+      {{ isDark ? 'Light Mode' : 'Dark Mode' }}
     </span>
   </button>
 </template>

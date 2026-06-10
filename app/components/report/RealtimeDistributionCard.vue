@@ -19,13 +19,13 @@ const selectedType = ref<DistributionType>('income')
 const selectedDimension = ref<DistributionDimension>('source')
 
 const typeOptions: Array<{ id: DistributionType, label: string }> = [
-  { id: 'income', label: 'Pemasukan' },
-  { id: 'outcome', label: 'Pengeluaran' },
+  { id: 'income', label: 'Income' },
+  { id: 'outcome', label: 'Outcome' },
 ]
 
 const dimensionOptions: Array<{ id: DistributionDimension, label: string }> = [
-  { id: 'source', label: 'Sumber' },
-  { id: 'category', label: 'Kategori' },
+  { id: 'source', label: 'Source' },
+  { id: 'category', label: 'Category' },
 ]
 
 function toPieItemsFromSource(items: SourceBreakdownItem[]): PieChartItem[] {
@@ -57,9 +57,9 @@ const chartItems = computed<PieChartItem[]>(() => {
 })
 
 const chartTitle = computed(() => {
-  const typeLabel = selectedType.value === 'income' ? 'Pemasukan' : 'Pengeluaran'
-  const dimensionLabel = selectedDimension.value === 'source' ? 'Sumber' : 'Kategori'
-  return `Distribusi ${typeLabel} per ${dimensionLabel}`
+  const typeLabel = selectedType.value === 'income' ? 'Income' : 'Outcome'
+  const dimensionLabel = selectedDimension.value === 'source' ? 'Source' : 'Category'
+  return `${typeLabel} distribution by ${dimensionLabel}`
 })
 
 const activeTotal = computed(() =>
@@ -75,16 +75,16 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
   <div class="rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
     <div class="border-b border-slate-200 p-4 sm:p-5 dark:border-slate-800">
       <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100 sm:text-lg">
-        Laporan Realtime
+        Realtime Report
       </h2>
       <p class="text-muted mt-1">
-        Ringkasan dan distribusi transaksi dalam periode terpilih
+        Summary and distribution for the selected period
       </p>
 
       <div class="mt-4 grid gap-2 sm:grid-cols-3">
         <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-3 dark:border-emerald-900/50 dark:bg-emerald-950/40">
           <p class="text-xs font-medium text-emerald-700 dark:text-emerald-300">
-            Total Pemasukan
+            Total Income
           </p>
           <p class="mt-1 text-lg font-bold text-emerald-800 dark:text-emerald-200">
             {{ formatRupiah(report.summary.totalIncome) }}
@@ -92,7 +92,7 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
         </div>
         <div class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-3 dark:border-rose-900/50 dark:bg-rose-950/40">
           <p class="text-xs font-medium text-rose-700 dark:text-rose-300">
-            Total Pengeluaran
+            Total Outcome
           </p>
           <p class="mt-1 text-lg font-bold text-rose-800 dark:text-rose-200">
             {{ formatRupiah(report.summary.totalOutcome) }}
@@ -100,7 +100,7 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
         </div>
         <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 dark:border-slate-700 dark:bg-slate-800/60">
           <p class="text-xs font-medium text-slate-600 dark:text-slate-400">
-            Saldo
+            Balance
           </p>
           <p
             class="mt-1 text-lg font-bold"
@@ -115,7 +115,7 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
     <div class="space-y-4 p-4 sm:p-5">
       <div class="space-y-3">
         <div class="space-y-1.5">
-          <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Jenis transaksi</span>
+          <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Transaction type</span>
           <div class="grid grid-cols-2 gap-2">
             <button
               v-for="option in typeOptions"
@@ -135,7 +135,7 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
         </div>
 
         <div class="space-y-1.5">
-          <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Distribusi berdasarkan</span>
+          <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Group by</span>
           <div class="grid grid-cols-2 gap-2">
             <button
               v-for="option in dimensionOptions"
@@ -179,7 +179,7 @@ const chartColors = computed(() => getChartColors(chartItems.value.length))
         class="space-y-2"
       >
         <p class="text-xs font-medium text-slate-600 dark:text-slate-400">
-          Rincian
+          Breakdown
         </p>
         <div class="space-y-2">
           <div

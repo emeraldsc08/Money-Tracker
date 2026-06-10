@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const name = decodeURIComponent(getRouterParam(event, 'name') ?? '').trim()
 
     if (!name) {
-      return apiError(event, 'Nama sumber wajib diisi.', 400)
+      return apiError(event, 'Source name is required.', 400)
     }
 
     const source = await prisma.source.findUnique({
@@ -20,11 +20,11 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!source) {
-      return apiError(event, 'Sumber dana tidak ditemukan.', 404)
+      return apiError(event, 'Source not found.', 404)
     }
 
     if (source.isSystem) {
-      return apiError(event, 'Sumber bawaan tidak bisa dihapus.', 400)
+      return apiError(event, 'Default sources cannot be deleted.', 400)
     }
 
     const usageCount = await prisma.transaction.count({
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (usageCount > 0) {
-      return apiError(event, 'Sumber masih dipakai transaksi.', 400)
+      return apiError(event, 'Source is still used by transactions.', 400)
     }
 
     await prisma.source.delete({
@@ -47,6 +47,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[DELETE /api/sources/:name]', error)
-    return apiError(event, 'Gagal menghapus sumber dana.', 500)
+    return apiError(event, 'Failed to delete source.', 500)
   }
 })

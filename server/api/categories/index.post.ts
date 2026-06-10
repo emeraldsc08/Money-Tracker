@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     if (!body || typeof body !== 'object') {
-      return apiError(event, 'Request body tidak valid.', 400)
+      return apiError(event, 'Invalid request body.', 400)
     }
 
     const input = body as { name?: unknown, type?: unknown }
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     const type = input.type
 
     if (!name) {
-      return apiError(event, 'Nama kategori wajib diisi.', 400)
+      return apiError(event, 'Category name is required.', 400)
     }
 
     if (type !== TransactionType.INCOME && type !== TransactionType.OUTCOME) {
@@ -56,6 +56,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[POST /api/categories]', error)
-    return apiError(event, 'Gagal menambah kategori.', 500)
+    return apiError(event, 'Failed to add category.', 500)
   }
 })

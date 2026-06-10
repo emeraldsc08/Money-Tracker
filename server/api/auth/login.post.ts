@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!user || !(await verifyPassword(user.passwordHash, password))) {
-      return apiError(event, 'Email atau password salah.', 401)
+      return apiError(event, 'Invalid email or password.', 401)
     }
 
     await setUserSession(event, {
@@ -37,6 +37,6 @@ export default defineEventHandler(async (event) => {
   }
   catch (error) {
     console.error('[POST /api/auth/login]', error)
-    return apiError(event, 'Gagal login.', 500)
+    return apiError(event, 'Failed to log in.', 500)
   }
 })

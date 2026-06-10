@@ -18,15 +18,15 @@ export function validateRegisterBody(body: unknown): ValidationResult<RegisterIn
   const input = body as Record<string, unknown>
 
   if (!isNonEmptyString(input.name)) {
-    return { ok: false, error: 'Nama wajib diisi.' }
+    return { ok: false, error: 'Name is required.' }
   }
 
   if (!isNonEmptyString(input.email) || !EMAIL_PATTERN.test(input.email.trim())) {
-    return { ok: false, error: 'Email tidak valid.' }
+    return { ok: false, error: 'Email is invalid.' }
   }
 
   if (!isNonEmptyString(input.password) || input.password.length < 6) {
-    return { ok: false, error: 'Password minimal 6 karakter.' }
+    return { ok: false, error: 'Password must be at least 6 characters.' }
   }
 
   return {
@@ -47,11 +47,11 @@ export function validateLoginBody(body: unknown): ValidationResult<LoginInput> {
   const input = body as Record<string, unknown>
 
   if (!isNonEmptyString(input.email)) {
-    return { ok: false, error: 'Email wajib diisi.' }
+    return { ok: false, error: 'Email is required.' }
   }
 
   if (!isNonEmptyString(input.password)) {
-    return { ok: false, error: 'Password wajib diisi.' }
+    return { ok: false, error: 'Password is required.' }
   }
 
   return {

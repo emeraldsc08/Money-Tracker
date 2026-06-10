@@ -23,7 +23,7 @@ function createInitialFormState(): TransactionFormState {
   return {
     type: props.type,
     date: '',
-    source: 'Uang Tunai',
+    source: 'Cash',
     title: '',
     category: '',
     amount: '',
@@ -126,7 +126,7 @@ async function submitForm() {
     })
 
     if (!response.success) {
-      errorMessage.value = response.error ?? 'Gagal menyimpan transaksi.'
+      errorMessage.value = response.error ?? 'Failed to save transaction.'
       return
     }
 
@@ -138,7 +138,7 @@ async function submitForm() {
   catch (submitError) {
     errorMessage.value = submitError instanceof Error
       ? submitError.message
-      : 'Gagal menyimpan transaksi.'
+      : 'Failed to save transaction.'
   }
   finally {
     isSubmitting.value = false
@@ -174,7 +174,7 @@ async function confirmDelete() {
     )
 
     if (!response.success) {
-      deleteError.value = response.error ?? 'Gagal menghapus transaksi.'
+      deleteError.value = response.error ?? 'Failed to delete transaction.'
       return
     }
 
@@ -186,7 +186,7 @@ async function confirmDelete() {
   catch (deleteSubmitError) {
     deleteError.value = deleteSubmitError instanceof Error
       ? deleteSubmitError.message
-      : 'Gagal menghapus transaksi.'
+      : 'Failed to delete transaction.'
   }
   finally {
     isSubmitting.value = false
@@ -213,11 +213,12 @@ async function confirmDelete() {
     @submit.prevent="submitForm"
   >
     <label class="block space-y-1.5">
-      <span class="text-label">Tanggal & Jam</span>
+      <span class="text-label">Date & Time</span>
       <input
         :value="form.date"
         type="datetime-local"
         required
+        placeholder="Select date and time"
         class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         :class="accentFocusClass"
         :disabled="isSubmitting"
@@ -226,11 +227,12 @@ async function confirmDelete() {
     </label>
 
     <label class="block space-y-1.5">
-      <span class="text-label">Jenis Sumber</span>
+      <span class="text-label">Source</span>
       <SearchableCombobox
         :model-value="form.source"
         :options="sources"
-        placeholder="Cari atau ketik sumber..."
+        placeholder="Search or type a source..."
+        add-label="Add"
         :accent-focus-class="accentFocusClass"
         :can-delete="isCustomSource"
         :disabled="isSubmitting"
@@ -251,7 +253,7 @@ async function confirmDelete() {
           type="text"
           inputmode="numeric"
           required
-          placeholder="0"
+          placeholder="Enter amount"
           class="touch-target w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm outline-none focus:ring-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
           :class="accentFocusClass"
           :disabled="isSubmitting"
@@ -266,6 +268,7 @@ async function confirmDelete() {
         :value="form.title"
         type="text"
         required
+        placeholder="e.g. Lunch, Monthly salary"
         class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         :class="accentFocusClass"
         :disabled="isSubmitting"
@@ -278,7 +281,8 @@ async function confirmDelete() {
       <SearchableCombobox
         :model-value="form.category"
         :options="categories"
-        placeholder="Cari atau ketik kategori..."
+        placeholder="Search or type a category..."
+        add-label="Add"
         :accent-focus-class="accentFocusClass"
         :can-delete="isCustomCategory"
         :disabled="isSubmitting"
@@ -293,6 +297,7 @@ async function confirmDelete() {
       <textarea
         :value="form.description"
         rows="3"
+        placeholder="Add notes (optional)"
         class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         :class="accentFocusClass"
         :disabled="isSubmitting"
@@ -347,9 +352,9 @@ async function confirmDelete() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            Menyimpan...
+            Saving...
           </span>
-          <span v-else>{{ isEditMode ? 'Simpan Perubahan' : 'Simpan Transaksi' }}</span>
+          <span v-else>{{ isEditMode ? 'Save Changes' : 'Save Transaction' }}</span>
         </button>
       </div>
 
@@ -360,7 +365,7 @@ async function confirmDelete() {
         :disabled="isSubmitting"
         @click="openDeleteConfirm"
       >
-        Hapus Transaksi
+        Delete Transaction
       </button>
     </div>
   </form>

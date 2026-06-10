@@ -1,7 +1,7 @@
 export const TRANSACTION_TOAST_MESSAGES = {
-  created: 'Transaksi berhasil ditambahkan.',
-  updated: 'Transaksi berhasil diperbarui.',
-  deleted: 'Transaksi berhasil dihapus.',
+  created: 'Transaction added successfully.',
+  updated: 'Transaction updated successfully.',
+  deleted: 'Transaction deleted successfully.',
 } as const
 
 export type TransactionToastKey = keyof typeof TRANSACTION_TOAST_MESSAGES

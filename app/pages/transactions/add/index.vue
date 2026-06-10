@@ -6,7 +6,7 @@ useHead({ title: 'Add Transaction' })
   <div>
     <TransactionBackHeader
       title="Add Transaction"
-      subtitle="Pilih jenis transaksi"
+      subtitle="Choose transaction type"
       back-to="/transactions"
     />
 
@@ -15,13 +15,13 @@ useHead({ title: 'Add Transaction' })
         <TransactionTypeCard
           type="INCOME"
           title="Income"
-          description="Catat pemasukan seperti gaji, freelance, atau investasi"
+          description="Record income such as salary, freelance, or investments"
           to="/transactions/add/income"
         />
         <TransactionTypeCard
           type="OUTCOME"
           title="Outcome"
-          description="Catat pengeluaran seperti makan, transport, atau belanja"
+          description="Record expenses such as food, transport, or shopping"
           to="/transactions/add/outcome"
         />
       </div>

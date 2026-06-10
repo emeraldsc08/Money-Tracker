@@ -19,7 +19,7 @@ defineProps<{
       v-if="items.length === 0"
       class="mt-4 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-400"
     >
-      Tidak ada data kategori.
+      No category data.
     </div>
 
     <div

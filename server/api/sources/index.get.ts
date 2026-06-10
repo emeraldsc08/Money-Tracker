@@ -19,6 +19,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[GET /api/sources]', error)
-    return apiError(event, 'Gagal mengambil sumber dana.', 500)
+    return apiError(event, 'Failed to fetch sources.', 500)
   }
 })

@@ -14,9 +14,9 @@ const emit = defineEmits<{
 }>()
 
 const presets: Array<{ id: ReportPeriodPreset, label: string }> = [
-  { id: 'today', label: 'Hari ini' },
-  { id: 'week', label: 'Minggu ini' },
-  { id: 'month', label: 'Bulan ini' },
+  { id: 'today', label: 'Today' },
+  { id: 'week', label: 'This week' },
+  { id: 'month', label: 'This month' },
   { id: 'custom', label: 'Custom range' },
 ]
 
@@ -28,7 +28,7 @@ function selectPreset(id: ReportPeriodPreset) {
 <template>
   <div class="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
     <p class="text-label">
-      Filter Periode
+      Period Filter
     </p>
 
     <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -52,7 +52,7 @@ function selectPreset(id: ReportPeriodPreset) {
         class="grid gap-3 sm:grid-cols-2"
       >
         <label class="block space-y-1.5">
-          <span class="text-label-sm">Dari</span>
+          <span class="text-label-sm">From</span>
           <input
             :value="customFrom"
             type="date"
@@ -61,7 +61,7 @@ function selectPreset(id: ReportPeriodPreset) {
           >
         </label>
         <label class="block space-y-1.5">
-          <span class="text-label-sm">Sampai</span>
+          <span class="text-label-sm">To</span>
           <input
             :value="customTo"
             type="date"

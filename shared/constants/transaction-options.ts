@@ -1,5 +1,5 @@
 export const DEFAULT_SOURCES = [
-  'Uang Tunai',
+  'Cash',
   'BCA',
   'Mandiri',
   'BRI',
@@ -8,19 +8,19 @@ export const DEFAULT_SOURCES = [
 ] as const
 
 export const INCOME_CATEGORIES = [
-  'Gaji',
+  'Salary',
   'Freelance',
-  'Investasi',
-  'Lainnya',
+  'Investment',
+  'Other',
 ] as const
 
 export const OUTCOME_CATEGORIES = [
-  'Makan',
+  'Food',
   'Transport',
-  'Tagihan',
-  'Belanja',
-  'Hiburan',
-  'Lainnya',
+  'Bills',
+  'Shopping',
+  'Entertainment',
+  'Other',
 ] as const
 
 export type DefaultSource = (typeof DEFAULT_SOURCES)[number]

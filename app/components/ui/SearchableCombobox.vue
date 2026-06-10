@@ -8,10 +8,10 @@ const props = withDefaults(defineProps<{
   addLabel?: string
   canDelete?: (option: string) => boolean
 }>(), {
-  placeholder: 'Cari atau ketik kategori...',
+  placeholder: 'Search or type...',
   disabled: false,
   accentFocusClass: 'focus:border-slate-400 focus:ring-slate-100 dark:focus:ring-slate-700',
-  addLabel: 'Tambah',
+  addLabel: 'Add',
   canDelete: undefined,
 })
 
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
         v-if="modelValue"
         type="button"
         class="touch-target absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-200"
-        aria-label="Hapus pilihan kategori"
+        aria-label="Clear selection"
         :disabled="disabled"
         @click.stop="clearSelection"
       >
@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
           v-if="isOptionDeletable(option)"
           type="button"
           class="touch-target mr-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-rose-500 transition hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/40"
-          :aria-label="`Hapus kategori ${option}`"
+          :aria-label="`Delete ${option}`"
           @mousedown.prevent
           @click.stop="deleteOption(option)"
         >
@@ -278,7 +278,7 @@ onBeforeUnmount(() => {
       v-else-if="isOpen && normalizedQuery && filteredOptions.length === 0"
       class="absolute z-20 mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-500 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
     >
-      Tidak ada hasil. Tekan Enter untuk menambahkan.
+      No results. Press Enter to add.
     </p>
   </div>
 </template>

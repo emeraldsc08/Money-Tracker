@@ -41,7 +41,7 @@ const customRangeError = computed(() => {
 
   return getCustomDateRange(customFrom.value, customTo.value)
     ? null
-    : 'Rentang tanggal custom tidak valid.'
+    : 'Custom date range is invalid.'
 })
 
 const { data: report, status, error, refresh } = await useFetch('/api/reports/realtime', {
@@ -66,7 +66,7 @@ const fetchErrorMessage = computed(() => error.value?.message ?? null)
   <div>
     <TransactionBackHeader
       title="Realtime Report"
-      subtitle="Ringkasan dan distribusi transaksi"
+      subtitle="Transaction summary and distribution"
       back-to="/transactions"
     />
 
@@ -101,7 +101,7 @@ const fetchErrorMessage = computed(() => error.value?.message ?? null)
           class="touch-target mt-4 rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
           @click="refresh()"
         >
-          Coba lagi
+          Try again
         </button>
       </div>
 

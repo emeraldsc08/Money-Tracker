@@ -32,7 +32,7 @@ useHead({
       v-if="status === 'pending'"
       class="text-muted mx-auto max-w-3xl px-4 py-16 text-center sm:px-6"
     >
-      Memuat transaksi...
+      Loading transaction...
     </div>
 
     <div
@@ -46,7 +46,7 @@ useHead({
         to="/transactions"
         class="mt-4 inline-block rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white dark:bg-slate-100 dark:text-slate-900"
       >
-        Kembali ke Transactions
+        Back to Transactions
       </NuxtLink>
     </div>
 

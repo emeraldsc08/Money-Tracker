@@ -32,6 +32,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[GET /api/categories]', error)
-    return apiError(event, 'Gagal mengambil kategori.', 500)
+    return apiError(event, 'Failed to fetch categories.', 500)
   }
 })

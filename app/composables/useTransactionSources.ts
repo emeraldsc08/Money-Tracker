@@ -6,7 +6,7 @@ export function useTransactionSources() {
     key: 'user-sources',
     transform: (response: ApiResponse<SerializedSource[]>) => {
       if (!response.success) {
-        throw new Error(response.error ?? 'Gagal mengambil sumber dana.')
+        throw new Error(response.error ?? 'Failed to fetch sources.')
       }
       return response.data ?? []
     },

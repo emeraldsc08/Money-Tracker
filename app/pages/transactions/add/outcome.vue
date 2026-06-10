@@ -6,7 +6,7 @@ useHead({ title: 'Add Outcome' })
   <div>
     <TransactionBackHeader
       title="Add Outcome"
-      subtitle="Catat pengeluaran baru"
+      subtitle="Record new expense"
       back-to="/transactions/add"
     />
 

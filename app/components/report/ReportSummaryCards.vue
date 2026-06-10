@@ -29,7 +29,7 @@ defineProps<{
 
     <div class="surface-card p-4 sm:col-span-1">
       <p class="text-label-sm">
-        Selisih (Balance)
+        Balance
       </p>
       <p
         class="mt-2 text-xl font-bold sm:text-2xl"

@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     })
 
     if (existing) {
-      return apiError(event, 'Email sudah terdaftar.', 409)
+      return apiError(event, 'Email is already registered.', 409)
     }
 
     const passwordHash = await hashPassword(password)
@@ -51,6 +51,6 @@ export default defineEventHandler(async (event) => {
   }
   catch (error) {
     console.error('[POST /api/auth/register]', error)
-    return apiError(event, 'Gagal mendaftar.', 500)
+    return apiError(event, 'Failed to register.', 500)
   }
 })

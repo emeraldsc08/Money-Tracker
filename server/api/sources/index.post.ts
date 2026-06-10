@@ -8,12 +8,12 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     if (!body || typeof body !== 'object' || typeof (body as { name?: unknown }).name !== 'string') {
-      return apiError(event, 'Nama sumber wajib diisi.', 400)
+      return apiError(event, 'Source name is required.', 400)
     }
 
     const name = (body as { name: string }).name.trim()
     if (!name) {
-      return apiError(event, 'Nama sumber wajib diisi.', 400)
+      return apiError(event, 'Source name is required.', 400)
     }
 
     const existing = await prisma.source.findUnique({
@@ -52,6 +52,6 @@ export default defineEventHandler(async (event) => {
     }
 
     console.error('[POST /api/sources]', error)
-    return apiError(event, 'Gagal menambah sumber dana.', 500)
+    return apiError(event, 'Failed to add source.', 500)
   }
 })

@@ -88,7 +88,7 @@ onMounted(() => {
       <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
         <div class="min-w-0">
           <h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">
-            Transaksi Harian
+            Daily Transactions
           </h1>
           <p class="text-muted mt-1 truncate">
             {{ dayLabel }}
@@ -99,7 +99,7 @@ onMounted(() => {
           to="/transactions/add"
           class="touch-target inline-flex shrink-0 items-center rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
         >
-          Tambah
+          Add
         </NuxtLink>
       </div>
     </header>
@@ -117,7 +117,7 @@ onMounted(() => {
       >
         <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-3 dark:border-emerald-900/50 dark:bg-emerald-950/40">
           <p class="text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
-            Masuk
+            Income
           </p>
           <p class="mt-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
             {{ formatRupiah(dailySummary.income) }}
@@ -125,7 +125,7 @@ onMounted(() => {
         </div>
         <div class="rounded-2xl border border-rose-200 bg-rose-50 px-3 py-3 dark:border-rose-900/50 dark:bg-rose-950/40">
           <p class="text-[11px] font-medium text-rose-700 dark:text-rose-300">
-            Keluar
+            Outcome
           </p>
           <p class="mt-1 text-sm font-semibold text-rose-700 dark:text-rose-300">
             {{ formatRupiah(dailySummary.outcome) }}
@@ -133,7 +133,7 @@ onMounted(() => {
         </div>
         <div class="rounded-2xl border border-slate-200 bg-white px-3 py-3 dark:border-slate-700 dark:bg-slate-900">
           <p class="text-[11px] font-medium text-slate-600 dark:text-slate-400">
-            Saldo
+            Balance
           </p>
           <p
             class="mt-1 text-sm font-semibold"
@@ -158,7 +158,7 @@ onMounted(() => {
           class="touch-target mt-4 rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
           @click="refresh()"
         >
-          Coba lagi
+          Try again
         </button>
       </div>
 
@@ -172,10 +172,10 @@ onMounted(() => {
         class="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center dark:border-slate-700 dark:bg-slate-900"
       >
         <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100">
-          Tidak ada transaksi untuk filter ini
+          No transactions match this filter
         </h2>
         <p class="text-muted mt-2">
-          Coba ubah tipe atau sumber, atau reset filter.
+          Try changing type or source, or reset the filter.
         </p>
         <button
           type="button"
@@ -191,7 +191,7 @@ onMounted(() => {
         class="space-y-3"
       >
         <p class="text-muted-xs font-medium">
-          {{ dailySummary.count }} transaksi
+          {{ dailySummary.count }} transaction(s)
         </p>
         <TransactionListItem
           v-for="transaction in transactions"

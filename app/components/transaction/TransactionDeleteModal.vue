@@ -29,10 +29,10 @@ const emit = defineEmits<{
         aria-label="Confirm delete transaction"
       >
         <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
-          Hapus transaksi?
+          Delete transaction?
         </h2>
         <p class="text-muted mt-2">
-          Tindakan ini tidak dapat dibatalkan.
+          This action cannot be undone.
         </p>
 
         <div class="mt-4 rounded-xl bg-slate-50 px-4 py-3 text-sm dark:bg-slate-800 dark:text-slate-200">
@@ -64,7 +64,7 @@ const emit = defineEmits<{
             :disabled="submitting"
             @click="emit('close')"
           >
-            Batal
+            Cancel
           </button>
           <button
             type="button"
@@ -72,7 +72,7 @@ const emit = defineEmits<{
             :disabled="submitting"
             @click="emit('confirm')"
           >
-            {{ submitting ? 'Menghapus...' : 'Hapus' }}
+            {{ submitting ? 'Deleting...' : 'Delete' }}
           </button>
         </div>
       </div>

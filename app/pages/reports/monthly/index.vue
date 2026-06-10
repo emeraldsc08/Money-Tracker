@@ -23,7 +23,7 @@ const fetchErrorMessage = computed(() => error.value?.message ?? null)
   <div>
     <TransactionBackHeader
       title="Monthly Report"
-      subtitle="Rekap transaksi per bulan"
+      subtitle="Monthly transaction summaries"
       back-to="/transactions"
     />
 
@@ -42,14 +42,14 @@ const fetchErrorMessage = computed(() => error.value?.message ?? null)
           class="touch-target mt-4 rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
           @click="refresh()"
         >
-          Coba lagi
+          Try again
         </button>
       </div>
 
       <ReportEmptyState
         v-else-if="!hasMonths"
-        title="Belum ada rekap bulanan"
-        description="Transaksi yang kamu catat akan muncul di sini dalam bentuk rekap per bulan."
+        title="No monthly summaries yet"
+        description="Your recorded transactions will appear here as monthly summaries."
       />
 
       <MonthlySummaryCard

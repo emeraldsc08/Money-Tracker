@@ -26,10 +26,10 @@ const emit = defineEmits<{
     </div>
 
     <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
-      Belum ada transaksi hari ini
+      No transactions for this day
     </h2>
     <p class="text-muted mt-2 max-w-sm">
-      Tambahkan pemasukan atau pengeluaran untuk hari yang dipilih.
+      Add income or expenses for the selected date.
     </p>
 
     <button

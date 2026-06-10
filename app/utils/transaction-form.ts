@@ -22,7 +22,7 @@ export function createEmptyFormStateForType(type: TransactionFormState['type']):
   return {
     type,
     date: localValue,
-    source: 'Uang Tunai',
+    source: 'Cash',
     title: '',
     category: '',
     amount: '',
@@ -63,38 +63,38 @@ export function formStateToPayload(form: TransactionFormState) {
 
 export function validateTransactionFormClient(form: TransactionFormState): string | null {
   if (!form.date.trim()) {
-    return 'Tanggal & jam wajib diisi.'
+    return 'Date and time are required.'
   }
 
   const isoDate = datetimeLocalToIso(form.date)
   if (!isoDate) {
-    return 'Tanggal & jam tidak valid.'
+    return 'Date and time are invalid.'
   }
 
   const parsedDate = new Date(isoDate)
   if (Number.isNaN(parsedDate.getTime())) {
-    return 'Tanggal & jam tidak valid.'
+    return 'Date and time are invalid.'
   }
 
   if (!form.source.trim()) {
-    return 'Jenis sumber wajib dipilih.'
+    return 'Source is required.'
   }
 
   const amount = Number(form.amount)
   if (!form.amount || !Number.isFinite(amount)) {
-    return 'Amount wajib diisi.'
+    return 'Amount is required.'
   }
 
   if (amount <= 0) {
-    return 'Amount harus lebih dari 0.'
+    return 'Amount must be greater than 0.'
   }
 
   if (!form.title.trim()) {
-    return 'Title wajib diisi.'
+    return 'Title is required.'
   }
 
   if (!form.category.trim()) {
-    return 'Category wajib dipilih.'
+    return 'Category is required.'
   }
 
   return null

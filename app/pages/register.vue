@@ -6,7 +6,7 @@ definePageMeta({
   layout: 'auth',
 })
 
-useHead({ title: 'Daftar' })
+useHead({ title: 'Sign Up' })
 
 const { fetch: refreshSession } = useUserSession()
 
@@ -31,7 +31,7 @@ async function submitRegister() {
     })
 
     if (!response.success) {
-      errorMessage.value = response.error ?? 'Gagal mendaftar.'
+      errorMessage.value = response.error ?? 'Failed to sign up.'
       return
     }
 
@@ -39,7 +39,7 @@ async function submitRegister() {
     await navigateTo('/transactions')
   }
   catch (error) {
-    errorMessage.value = error instanceof Error ? error.message : 'Gagal mendaftar.'
+    errorMessage.value = error instanceof Error ? error.message : 'Failed to sign up.'
   }
   finally {
     isSubmitting.value = false
@@ -51,10 +51,10 @@ async function submitRegister() {
   <main class="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
     <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <h1 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-        Daftar
+        Sign Up
       </h1>
       <p class="text-muted mt-1 text-sm">
-        Buat akun Money Tracker kamu
+        Create your Money Tracker account
       </p>
 
       <form
@@ -62,12 +62,13 @@ async function submitRegister() {
         @submit.prevent="submitRegister"
       >
         <label class="block space-y-1.5">
-          <span class="text-label">Nama</span>
+          <span class="text-label">Name</span>
           <input
             v-model="form.name"
             type="text"
             required
             autocomplete="name"
+            placeholder="Your full name"
             class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-slate-700"
             :disabled="isSubmitting"
           >
@@ -80,6 +81,7 @@ async function submitRegister() {
             type="email"
             required
             autocomplete="email"
+            placeholder="you@example.com"
             class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-slate-700"
             :disabled="isSubmitting"
           >
@@ -93,6 +95,7 @@ async function submitRegister() {
             required
             minlength="6"
             autocomplete="new-password"
+            placeholder="At least 6 characters"
             class="touch-target w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-slate-700"
             :disabled="isSubmitting"
           >
@@ -110,17 +113,17 @@ async function submitRegister() {
           class="touch-target w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-60"
           :disabled="isSubmitting"
         >
-          {{ isSubmitting ? 'Memproses...' : 'Buat Akun' }}
+          {{ isSubmitting ? 'Creating account...' : 'Create Account' }}
         </button>
       </form>
 
       <p class="text-muted mt-5 text-center text-sm">
-        Sudah punya akun?
+        Already have an account?
         <NuxtLink
           to="/login"
           class="font-medium text-slate-900 underline-offset-2 hover:underline dark:text-slate-100"
         >
-          Login
+          Log in
         </NuxtLink>
       </p>
     </div>

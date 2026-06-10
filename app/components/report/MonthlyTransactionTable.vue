@@ -11,7 +11,7 @@ defineProps<{
   <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-4 dark:border-slate-800 sm:px-5">
       <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100">
-        Semua Transaksi
+        All Transactions
       </h2>
       <slot name="actions" />
     </div>
@@ -20,7 +20,7 @@ defineProps<{
       v-if="transactions.length === 0"
       class="text-muted px-4 py-10 text-center sm:px-5"
     >
-      Belum ada transaksi di bulan ini.
+      No transactions this month.
     </div>
 
     <div
@@ -31,7 +31,7 @@ defineProps<{
         <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-400">
           <tr>
             <th class="px-4 py-3 font-medium sm:px-5">
-              Tanggal
+              Date
             </th>
             <th class="px-4 py-3 font-medium sm:px-5">
               Title
