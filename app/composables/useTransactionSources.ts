@@ -1,77 +1,52 @@
-import { DEFAULT_SOURCES } from '~~/shared/constants/transaction-options'
-
-const STORAGE_KEY = 'money-tracker-custom-sources'
-
-function readStoredSources(): string[] {
-  if (!import.meta.client) {
-    return []
-  }
-
-  const stored = localStorage.getItem(STORAGE_KEY)
-  if (!stored) {
-    return []
-  }
-
-  try {
-    const parsed: unknown = JSON.parse(stored)
-    if (!Array.isArray(parsed)) {
-      return []
-    }
-
-    return parsed
-      .filter((item): item is string => typeof item === 'string')
-      .map(item => item.trim())
-      .filter(Boolean)
-  }
-  catch {
-    return []
-  }
-}
-
-function writeStoredSources(sources: string[]) {
-  if (!import.meta.client) {
-    return
-  }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sources))
-}
+import type { ApiResponse } from '~~/shared/types/api'
+import type { SerializedSource } from '~~/shared/types/master'
 
 export function useTransactionSources() {
-  const defaultSources = [...DEFAULT_SOURCES]
-  const customSources = useState<string[]>('custom-sources', () => [])
+  const { data, refresh, status } = useFetch('/api/sources', {
+    key: 'user-sources',
+    transform: (response: ApiResponse<SerializedSource[]>) => {
+      if (!response.success) {
+        throw new Error(response.error ?? 'Gagal mengambil sumber dana.')
+      }
+      return response.data ?? []
+    },
+  })
 
-  const sources = computed(() => [...defaultSources, ...customSources.value])
-
-  function initSources() {
-    customSources.value = readStoredSources()
-  }
+  const sources = computed(() => (data.value ?? []).map(item => item.name))
 
   function hasSource(name: string): boolean {
     const normalized = name.trim().toLowerCase()
     return sources.value.some(source => source.toLowerCase() === normalized)
   }
 
-  function addSource(name: string) {
+  function isCustomSource(name: string): boolean {
+    const item = data.value?.find(source => source.name === name)
+    return item ? !item.isSystem : false
+  }
+
+  async function initSources() {
+    await refresh()
+  }
+
+  async function addSource(name: string) {
     const trimmed = name.trim()
     if (!trimmed || hasSource(trimmed)) {
       return
     }
 
-    customSources.value = [...customSources.value, trimmed]
-    writeStoredSources(customSources.value)
+    await $fetch('/api/sources', {
+      method: 'POST',
+      body: { name: trimmed },
+    })
+    await refresh()
   }
 
-  function removeSource(name: string) {
-    customSources.value = customSources.value.filter(source => source !== name)
-    writeStoredSources(customSources.value)
-  }
-
-  function isCustomSource(name: string): boolean {
-    return customSources.value.includes(name)
-  }
-
-  if (import.meta.client) {
-    initSources()
+  async function removeSource(name: string) {
+    await $fetch(`/api/sources/${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      ignoreResponseError: true,
+    })
+    await refresh()
   }
 
   return {
@@ -80,5 +55,6 @@ export function useTransactionSources() {
     removeSource,
     isCustomSource,
     initSources,
+    status,
   }
 }

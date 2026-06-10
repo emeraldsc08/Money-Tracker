@@ -51,34 +51,48 @@ function withCategoryPercentages(
     }))
 }
 
-export async function buildRealtimeReport(from: Date, to: Date): Promise<RealtimeReportData> {
+export async function buildRealtimeReport(
+  userId: string,
+  from: Date,
+  to: Date,
+): Promise<RealtimeReportData> {
   const dateFilter = {
     gte: from,
     lte: to,
   }
 
-  const [groupedBySource, groupedByCategory] = await Promise.all([
+  const baseWhere = {
+    userId,
+    date: dateFilter,
+  }
+
+  const [groupedBySource, groupedByCategory, sources, categories] = await Promise.all([
     prisma.transaction.groupBy({
-      by: ['type', 'source'],
-      where: { date: dateFilter },
+      by: ['type', 'sourceId'],
+      where: baseWhere,
       _sum: { amount: true },
     }),
     prisma.transaction.groupBy({
-      by: ['type', 'category'],
-      where: { date: dateFilter },
+      by: ['type', 'categoryId'],
+      where: baseWhere,
       _sum: { amount: true },
     }),
+    prisma.source.findMany({ where: { userId } }),
+    prisma.category.findMany({ where: { userId } }),
   ])
+
+  const sourceNameById = new Map(sources.map(source => [source.id, source.name]))
+  const categoryNameById = new Map(categories.map(category => [category.id, category.name]))
 
   const sourceRows: SourceAggregateRow[] = groupedBySource.map(row => ({
     type: row.type,
-    source: row.source,
+    source: sourceNameById.get(row.sourceId) ?? 'Unknown',
     amount: toNumber(row._sum.amount ?? 0),
   }))
 
   const categoryRows: CategoryAggregateRow[] = groupedByCategory.map(row => ({
     type: row.type,
-    category: row.category,
+    category: categoryNameById.get(row.categoryId) ?? 'Unknown',
     amount: toNumber(row._sum.amount ?? 0),
   }))
 

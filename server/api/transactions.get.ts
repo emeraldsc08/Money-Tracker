@@ -1,4 +1,6 @@
 import { apiError, apiSuccess } from '../utils/api-response'
+import { requireUser } from '../utils/require-user'
+import { transactionInclude } from '../utils/transaction-query'
 import { serializeTransactions } from '../utils/transaction-serializer'
 import {
   buildTransactionWhereClause,
@@ -7,6 +9,7 @@ import {
 
 export default defineEventHandler(async (event) => {
   try {
+    const user = await requireUser(event)
     const query = getQuery(event)
     const validation = validateTransactionListQuery(query)
 
@@ -15,13 +18,18 @@ export default defineEventHandler(async (event) => {
     }
 
     const transactions = await prisma.transaction.findMany({
-      where: buildTransactionWhereClause(validation.filters),
+      where: buildTransactionWhereClause(user.id, validation.filters),
+      include: transactionInclude,
       orderBy: { date: 'desc' },
     })
 
     return apiSuccess(serializeTransactions(transactions))
   }
   catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error && error.statusCode === 401) {
+      return apiError(event, 'Unauthorized', 401)
+    }
+
     console.error('[GET /api/transactions]', error)
     return apiError(event, 'Failed to fetch transactions.', 500)
   }

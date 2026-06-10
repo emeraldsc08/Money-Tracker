@@ -75,23 +75,23 @@ onMounted(() => {
   isFormReady.value = true
 })
 
-function onCategoryAdded(category: string) {
-  addCategory(category)
+async function onCategoryAdded(category: string) {
+  await addCategory(category)
 }
 
-function onCategoryDeleted(category: string) {
-  removeCategory(category)
+async function onCategoryDeleted(category: string) {
+  await removeCategory(category)
   if (form.value.category === category) {
     updateField('category', '')
   }
 }
 
-function onSourceAdded(source: string) {
-  addSource(source)
+async function onSourceAdded(source: string) {
+  await addSource(source)
 }
 
-function onSourceDeleted(source: string) {
-  removeSource(source)
+async function onSourceDeleted(source: string) {
+  await removeSource(source)
   if (form.value.source === source) {
     updateField('source', '')
   }

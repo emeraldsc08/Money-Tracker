@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const { user, clear: clearSession } = useUserSession()
 
 const navItems = [
   {
@@ -25,6 +26,20 @@ const navItems = [
 function isActive(path: string): boolean {
   return route.path === path || route.path.startsWith(`${path}/`)
 }
+
+const userInitial = computed(() => {
+  const name = user.value?.name?.trim()
+  if (!name) {
+    return '?'
+  }
+  return name.charAt(0).toUpperCase()
+})
+
+async function logout() {
+  await $fetch('/api/auth/logout', { method: 'POST' })
+  await clearSession()
+  await navigateTo('/login')
+}
 </script>
 
 <template>
@@ -38,7 +53,7 @@ function isActive(path: string): boolean {
           Money Tracker
         </NuxtLink>
         <p class="text-muted-xs mt-1">
-          Catat keuangan harianmu
+          Halo, {{ user?.name ?? 'Pengguna' }}
         </p>
       </div>
 
@@ -89,7 +104,32 @@ function isActive(path: string): boolean {
         </NuxtLink>
       </nav>
 
-      <div class="border-t border-slate-200 p-4 dark:border-slate-800">
+      <div class="space-y-3 border-t border-slate-200 p-4 dark:border-slate-800">
+        <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2.5 dark:bg-slate-800/60">
+          <span
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white dark:bg-slate-100 dark:text-slate-900"
+            aria-hidden="true"
+          >
+            {{ userInitial }}
+          </span>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-medium text-slate-900 dark:text-slate-100">
+              {{ user?.name }}
+            </p>
+            <p class="truncate text-xs text-slate-500 dark:text-slate-400">
+              {{ user?.email }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="touch-target w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          @click="logout"
+        >
+          Logout
+        </button>
+
         <ColorModeToggle variant="sidebar" />
       </div>
     </aside>
@@ -166,6 +206,33 @@ function isActive(path: string): boolean {
             Tema
           </span>
         </div>
+
+        <button
+          type="button"
+          class="touch-target flex flex-1 flex-col items-center justify-center gap-1 px-1 py-2 text-center text-slate-500 dark:text-slate-400"
+          aria-label="Logout"
+          @click="logout"
+        >
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-transparent">
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+          </span>
+          <span class="text-[10px] font-medium leading-none">
+            Logout
+          </span>
+        </button>
       </div>
     </nav>
   </div>

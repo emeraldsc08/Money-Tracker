@@ -6,6 +6,7 @@ import type {
 } from '../../shared/types/report'
 import { getJakartaYmd, monthBoundsJakarta } from '../../shared/utils/jakarta-date'
 import { formatMonthLabel } from '../../shared/utils/month-format'
+import { transactionInclude } from './transaction-query'
 import { serializeTransactions } from './transaction-serializer'
 
 function toNumber(value: unknown): number {
@@ -31,8 +32,9 @@ function monthKey(year: number, month: number): string {
   return `${year}-${month}`
 }
 
-export async function buildMonthlyListReport(): Promise<MonthlySummaryItem[]> {
+export async function buildMonthlyListReport(userId: string): Promise<MonthlySummaryItem[]> {
   const transactions = await prisma.transaction.findMany({
+    where: { userId },
     select: {
       date: true,
       type: true,
@@ -78,16 +80,22 @@ export async function buildMonthlyListReport(): Promise<MonthlySummaryItem[]> {
   })
 }
 
-export async function buildMonthlyDetailReport(year: number, month: number): Promise<MonthlyDetailReport> {
+export async function buildMonthlyDetailReport(
+  userId: string,
+  year: number,
+  month: number,
+): Promise<MonthlyDetailReport> {
   const { from, to } = monthBoundsJakarta(year, month)
 
   const transactions = await prisma.transaction.findMany({
     where: {
+      userId,
       date: {
         gte: from,
         lte: to,
       },
     },
+    include: transactionInclude,
     orderBy: { date: 'desc' },
   })
 

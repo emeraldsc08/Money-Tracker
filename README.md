@@ -4,13 +4,19 @@ Aplikasi web untuk mencatat pemasukan dan pengeluaran harian, melihat laporan re
 
 ## Fitur
 
+### Autentikasi
+
+- **Register / Login / Logout** — email + password dengan session cookie (`nuxt-auth-utils`)
+- **Data per user** — transaksi, laporan, dan master data terisolasi per akun
+- **Master data** — sumber dana & kategori disimpan di database (bukan `localStorage`)
+
 ### Transaksi
 
 - **Tampilan harian** — fokus per hari dengan navigasi tanggal (← / →) dan filter URL yang bisa di-bookmark
 - **Filter** — tipe (semua / masuk / keluar), sumber, dan tanggal (`?date=YYYY-MM-DD&type=INCOME&source=BCA`)
 - **Ringkasan harian** — total masuk, keluar, dan saldo
 - **CRUD** — tambah, edit, dan hapus transaksi (income & outcome)
-- **Kategori & sumber custom** — searchable combobox dengan tambah/hapus item (disimpan di `localStorage`)
+- **Kategori & sumber custom** — searchable combobox dengan tambah/hapus item (per user di database)
 
 ### Laporan
 
@@ -55,12 +61,20 @@ npm run db:seed   # opsional — data contoh
 | Variabel | Deskripsi | Default |
 |----------|-----------|---------|
 | `DATABASE_URL` | Path file SQLite | `file:./dev.db` |
+| `NUXT_SESSION_PASSWORD` | Secret enkripsi session (min. 32 karakter) | — |
 
 Contoh `.env`:
 
 ```env
 DATABASE_URL="file:./dev.db"
+NUXT_SESSION_PASSWORD="ganti-dengan-secret-minimal-32-karakter"
 ```
+
+### Akun demo (setelah `npm run db:seed`)
+
+| Email | Password |
+|-------|----------|
+| `demo@moneytracker.local` | `demo1234` |
 
 ## Scripts
 
@@ -78,6 +92,8 @@ DATABASE_URL="file:./dev.db"
 
 | Route | Deskripsi |
 |-------|-----------|
+| `/login` | Masuk |
+| `/register` | Daftar akun baru |
 | `/` | Redirect ke `/transactions` |
 | `/transactions` | Daftar transaksi harian + filter |
 | `/transactions/add` | Pilih tipe (income / outcome) |

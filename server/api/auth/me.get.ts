@@ -1,19 +1,17 @@
 import { apiError, apiSuccess } from '../../utils/api-response'
-import { buildMonthlyListReport } from '../../utils/monthly-report'
 import { requireUser } from '../../utils/require-user'
 
 export default defineEventHandler(async (event) => {
   try {
     const user = await requireUser(event)
-    const months = await buildMonthlyListReport(user.id)
-    return apiSuccess(months)
+    return apiSuccess(user)
   }
   catch (error) {
     if (error && typeof error === 'object' && 'statusCode' in error && error.statusCode === 401) {
       return apiError(event, 'Unauthorized', 401)
     }
 
-    console.error('[GET /api/reports/monthly]', error)
-    return apiError(event, 'Failed to fetch monthly report list.', 500)
+    console.error('[GET /api/auth/me]', error)
+    return apiError(event, 'Gagal mengambil profil.', 500)
   }
 })

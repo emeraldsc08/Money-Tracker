@@ -191,20 +191,24 @@ export function validateTransactionListQuery(query: Record<string, unknown>): Li
 }
 
 export function buildTransactionWhereClause(
+  userId: string,
   filters: { type?: TransactionType, month?: number, year?: number, date?: string, source?: string },
 ) {
   const where: {
+    userId: string
     type?: TransactionType
-    source?: string
+    source?: { name: string }
     date?: { gte: Date, lte: Date }
-  } = {}
+  } = {
+    userId,
+  }
 
   if (filters.type) {
     where.type = filters.type
   }
 
   if (filters.source) {
-    where.source = filters.source
+    where.source = { name: filters.source }
   }
 
   if (filters.date) {
