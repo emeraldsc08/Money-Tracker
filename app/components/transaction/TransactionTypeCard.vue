@@ -1,21 +1,40 @@
 <script setup lang="ts">
+import type { AddTransactionType } from '~/composables/useAddTransaction'
+
 const props = defineProps<{
-  type: 'INCOME' | 'OUTCOME'
+  type: AddTransactionType
   title: string
   description: string
-  to: string
+  to?: string
+}>()
+
+const emit = defineEmits<{
+  select: [type: AddTransactionType]
 }>()
 
 const isIncome = computed(() => props.type === 'INCOME')
+
+const cardClass = computed(() =>
+  isIncome.value
+    ? 'border-emerald-200 bg-emerald-50 hover:border-emerald-400 hover:bg-emerald-100/80 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/60'
+    : 'border-rose-200 bg-rose-50 hover:border-rose-400 hover:bg-rose-100/80 dark:border-rose-900/50 dark:bg-rose-950/40 dark:hover:border-rose-700 dark:hover:bg-rose-950/60',
+)
+
+function onClick() {
+  if (!props.to) {
+    emit('select', props.type)
+  }
+}
 </script>
 
 <template>
-  <NuxtLink
+  <component
+    :is="to ? 'NuxtLink' : 'button'"
     :to="to"
-    class="touch-target group flex min-h-[180px] flex-col items-center justify-center rounded-2xl border-2 p-8 text-center transition active:scale-[0.98]"
-    :class="isIncome
-      ? 'border-emerald-200 bg-emerald-50 hover:border-emerald-400 hover:bg-emerald-100/80 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/60'
-      : 'border-rose-200 bg-rose-50 hover:border-rose-400 hover:bg-rose-100/80 dark:border-rose-900/50 dark:bg-rose-950/40 dark:hover:border-rose-700 dark:hover:bg-rose-950/60'"
+    :type="to ? undefined : 'button'"
+    class="touch-target group flex w-full min-h-[140px] flex-col items-center justify-center rounded-2xl border-2 p-6 text-center transition active:scale-[0.98] sm:min-h-[160px] sm:p-8"
+    :class="cardClass"
+    @click="onClick"
   >
     <div
       class="mb-5 flex h-20 w-20 items-center justify-center rounded-full transition group-hover:scale-105"
@@ -76,5 +95,5 @@ const isIncome = computed(() => props.type === 'INCOME')
     >
       {{ description }}
     </p>
-  </NuxtLink>
+  </component>
 </template>

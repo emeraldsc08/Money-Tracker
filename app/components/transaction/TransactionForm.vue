@@ -10,9 +10,19 @@ import {
   type TransactionFormState,
 } from '~/utils/transaction-form'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   type: 'INCOME' | 'OUTCOME'
   transaction?: SerializedTransaction
+  mode?: 'page' | 'modal'
+  bare?: boolean
+}>(), {
+  mode: 'page',
+  bare: false,
+})
+
+const emit = defineEmits<{
+  cancel: []
+  success: []
 }>()
 
 function createInitialFormState(): TransactionFormState {
@@ -130,6 +140,11 @@ async function submitForm() {
       return
     }
 
+    if (props.mode === 'modal') {
+      emit('success')
+      return
+    }
+
     await navigateTo({
       path: '/transactions',
       query: { toast: isEditMode.value ? 'updated' : 'created' },
@@ -146,6 +161,11 @@ async function submitForm() {
 }
 
 function cancelForm() {
+  if (props.mode === 'modal') {
+    emit('cancel')
+    return
+  }
+
   navigateTo('/transactions')
 }
 
@@ -209,7 +229,10 @@ async function confirmDelete() {
 
   <form
     v-else
-    class="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+    class="space-y-4"
+    :class="bare
+      ? ''
+      : 'rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900'"
     @submit.prevent="submitForm"
   >
     <label class="block space-y-1.5">

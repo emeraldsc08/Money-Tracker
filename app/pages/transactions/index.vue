@@ -17,6 +17,7 @@ definePageMeta({
 
 const route = useRoute()
 const { showToast } = useToast()
+const { openTypePicker } = useAddTransaction()
 
 const filters = computed(() => parseTransactionFiltersFromQuery(route.query))
 const dayLabel = computed(() => formatDayLabel(filters.value.date))
@@ -70,6 +71,11 @@ function resetFilters() {
   })
 }
 
+async function onTransactionCreated() {
+  await refresh()
+  showToast(TRANSACTION_TOAST_MESSAGES.created)
+}
+
 onMounted(() => {
   const toastKey = route.query.toast
   if (isTransactionToastKey(toastKey)) {
@@ -79,28 +85,17 @@ onMounted(() => {
       query: buildTransactionFilterQuery(filters.value),
     }, { replace: true })
   }
+
 })
 </script>
 
 <template>
   <div>
     <header class="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-      <div class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
-        <div class="min-w-0">
-          <h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">
-            Daily Transactions
-          </h1>
-          <p class="text-muted mt-1 truncate">
-            {{ dayLabel }}
-          </p>
-        </div>
-
-        <NuxtLink
-          to="/transactions/add"
-          class="touch-target inline-flex shrink-0 items-center rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
-        >
-          Add
-        </NuxtLink>
+      <div class="mx-auto max-w-3xl px-4 py-4 sm:px-6 sm:py-5">
+        <h1 class="truncate text-lg font-semibold text-slate-900 dark:text-slate-100 sm:text-xl">
+          {{ dayLabel }}
+        </h1>
       </div>
     </header>
 
@@ -164,7 +159,7 @@ onMounted(() => {
 
       <TransactionEmptyState
         v-else-if="!hasTransactions && !isFiltered"
-        @add="navigateTo('/transactions/add')"
+        @add="openTypePicker"
       />
 
       <div
@@ -201,5 +196,27 @@ onMounted(() => {
         />
       </div>
     </main>
+
+    <button
+      type="button"
+      class="fixed right-4 z-50 flex h-14 items-center gap-2 rounded-full bg-emerald-600 px-5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/30 ring-4 ring-white/80 transition hover:bg-emerald-700 hover:shadow-xl hover:shadow-emerald-600/40 active:scale-95 dark:ring-slate-950/80 bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] md:bottom-6 md:right-6 md:h-16 md:px-6 md:text-base"
+      aria-label="Add transaction"
+      @click="openTypePicker"
+    >
+      <svg
+        class="h-6 w-6 shrink-0"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      Add
+    </button>
+
+    <TransactionTypePickerModal />
+    <TransactionAddModal @success="onTransactionCreated" />
   </div>
 </template>
